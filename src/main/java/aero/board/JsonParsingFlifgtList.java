@@ -33,7 +33,7 @@ public class JsonParsingFlifgtList {
             String number = (JsonPath.from(String.valueOf(jsonObject)).getString("departures[" + i + "].number"));
             String status = (JsonPath.from(String.valueOf(jsonObject)).getString("departures[" + i + "].status"));
             String company = (JsonPath.from(String.valueOf(jsonObject)).getString("departures[" + i + "].airline.name"));
-            String aircraft = (JsonPath.from(String.valueOf(jsonObject)).getString("departures[" + i + "].aircraft.pacaje.model"));
+            String aircraft = (JsonPath.from(String.valueOf(jsonObject)).getString("departures[" + i + "].aircraft.model"));
 
             if (time == null) {
                 time = (JsonPath.from(String.valueOf(jsonObject)).getString("departures[" + i + "].departure.scheduledTimeLocal"));}

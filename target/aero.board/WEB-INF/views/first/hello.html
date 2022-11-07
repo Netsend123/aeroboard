@@ -9,14 +9,14 @@
 <body>
 <form method="get" accept-charset="utf-8">
     <div>
-        <label for="city">введите имя </label>
+        <label for="city">search </label>
         <input name="city" id="city">
     </div>
 </form>
 
-<!--<p th:text="${error}"></p>-->
+<p th:text="${error}"></p>
 
-<form method="get" accept-charset="utf-8" action="/first/hello">
+<form method="get" accept-charset="utf-8">
     <select th:object="${airport}" name="icao">
         <option th:each="airport : ${airportsArray}" th:value="${airport.getIcao()}" th:text="${airport.getName()}"></option>
 
@@ -39,7 +39,7 @@
 </table>
 
 <script>
-    let jsonObj = "[[${messege}]]"
+    let jsonObj = "[[${finalJsonToHtml}]]"
     console.log(jsonObj);
     myJsonStr = jsonObj.replaceAll('&quot;', '\"');
     console.log(myJsonStr)

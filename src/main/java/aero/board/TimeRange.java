@@ -53,7 +53,7 @@ public class TimeRange {
             e.printStackTrace();
         }
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(localTime);   //установили это время  в календаре
+        calendar.setTime(localTime);   //установили текущее время аэропорта в календаре
         calendar.add(Calendar.HOUR, 8); // прибавляем 8 часов от текущего времени аэропорта
         String forwardTime = formatter.format(calendar.getTime()).replace(' ', 'T');
         calendar.add(Calendar.HOUR, -12);// отнимаем 12 часов
