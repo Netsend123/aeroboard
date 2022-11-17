@@ -23,9 +23,18 @@
     </select>
     <input type="submit">
 </form>
+<br>
+<form  method="get" accept-charset="utf-8">
 
-
-<table>
+    <label name="inout">Direction</label>
+    <input type="radio" name="inout" value="departures"> Departures
+    <input type="radio" name="inout" value="arrivals" > Arrivals<br>
+    <input type="submit">
+</form>
+<br>
+<p align="center" th:text="${airportName}"></p>
+<br>
+<table align="center">
     <tr>
         <th>Time</th>
         <th>City</th>
@@ -42,7 +51,7 @@
     let jsonObj = "[[${finalJsonToHtml}]]"
     console.log(jsonObj);
     myJsonStr = jsonObj.replaceAll('&quot;', '\"');
-    console.log(myJsonStr)
+
     myArray = JSON.parse(myJsonStr);
     console.log(myArray)
     buildTable(myArray)

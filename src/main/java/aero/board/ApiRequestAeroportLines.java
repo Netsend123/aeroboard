@@ -15,10 +15,12 @@ public class ApiRequestAeroportLines {
 
     public String responseApiAeroLines;
 
+    public TimeRange timeRange = new TimeRange();
+
     public void request(String icao) {
 
         java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
-                .uri(URI.create("https://aerodatabox.p.rapidapi.com/flights/airports/icao/" + icao + "/" +  new TimeRange().createTimeForApi(icao) + "?withLeg=true&withCancelled=true&withCodeshared=true&withCargo=true&withPrivate=true&withLocation=false"))
+                .uri(URI.create("https://aerodatabox.p.rapidapi.com/flights/airports/icao/" + icao + "/" +  timeRange.createTimeForApi(icao) + "?withLeg=true&withCancelled=true&withCodeshared=true&withCargo=true&withPrivate=true&withLocation=false"))
                 .header("X-RapidAPI-Key", "2ea3972599mshf337a6ce1622083p183087jsn9b1ac0ee54b4")
                 .header("X-RapidAPI-Host", "aerodatabox.p.rapidapi.com")
                 .method("GET", java.net.http.HttpRequest.BodyPublishers.noBody())

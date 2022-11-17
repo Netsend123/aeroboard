@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Component
 public class TimeRange {
-
+    public String currentTime;
     public String createTimeForApi(String icao) {
         String currentAirportTime;
         HttpRequest request = HttpRequest.newBuilder()
@@ -43,7 +43,6 @@ public class TimeRange {
             e.printStackTrace();
         }
         currentAirportTime = JsonPath.from(String.valueOf(jsonObject)).getString("localTime"); //достали из json запроса параметр со временем
-
         System.out.println(currentAirportTime);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date localTime= null; //создали дату на основе строки со временем из запроса
@@ -54,6 +53,7 @@ public class TimeRange {
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(localTime);   //установили текущее время аэропорта в календаре
+        currentTime = formatter.format(calendar.getTime()); //текущее время аэропорта
         calendar.add(Calendar.HOUR, 8); // прибавляем 8 часов от текущего времени аэропорта
         String forwardTime = formatter.format(calendar.getTime()).replace(' ', 'T');
         calendar.add(Calendar.HOUR, -12);// отнимаем 12 часов
