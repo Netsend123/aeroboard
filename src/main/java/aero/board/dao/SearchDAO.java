@@ -12,27 +12,34 @@ import java.sql.*;
 
 @Component
 public class SearchDAO {
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/aerobase");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("postgres");
-
-        return dataSource;
+ private JdbcTemplate jdbcTemplate;
+    @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
 
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource());
-    }
 
-    private JdbcTemplate jdbcTemplate = jdbcTemplate();
+    //    public DataSource dataSource() {
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//
+//        dataSource.setDriverClassName("org.postgresql.Driver");
+//        dataSource.setUrl("jdbc:postgresql://localhost:5432/aerobase");
+//        dataSource.setUsername("postgres");
+//        dataSource.setPassword("postgres");
+//
+//        return dataSource;
+//    }
+//
+//
+//    public JdbcTemplate jdbcTemplate() {
+//        return new JdbcTemplate(dataSource());
+//    }
 
+ //   private JdbcTemplate jdbcTemplate = jdbcTemplate();
 
 
     public void saveSearch(String searsh) {
-        jdbcTemplate.update("INSERT INTO AIRPORTLIST VALUES(1,?)", searsh);
+        jdbcTemplate.update("INSERT INTO AIRPORTLIST (name, date ) VALUES(?, current_timestamp )", searsh);
     }
 }

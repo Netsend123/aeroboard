@@ -16,20 +16,21 @@
 
 <p th:text="${error}"></p>
 
-<form method="get" accept-charset="utf-8">
-    <select th:object="${airport}" name="icao">
+<form th:if="${listvisible == 'visible'}" method="get" accept-charset="utf-8">
+<label for="icao">Choose airport</label>
+    <select th:object="${airport}" name="icao" id="icao">
         <option th:each="airport : ${airportsArray}" th:value="${airport.getIcao()}" th:text="${airport.getName()}"></option>
 
     </select>
-    <input type="submit">
+    <input type="submit" value="submit">
 </form>
 <br>
 <form  method="get" accept-charset="utf-8">
 
-    <label name="inout">Direction</label>
-    <input type="radio" name="inout" value="departures"> Departures
+    <label name="inout">Choose direction</label>
+    <input type="radio" name="inout" value="departures" checked> Departures
     <input type="radio" name="inout" value="arrivals" > Arrivals<br>
-    <input type="submit">
+    <input type="submit" value="submit">
 </form>
 <br>
 <p align="center" th:text="${airportName}"></p>

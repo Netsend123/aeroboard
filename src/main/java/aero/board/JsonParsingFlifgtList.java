@@ -24,7 +24,7 @@ public class JsonParsingFlifgtList {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println(jsonAeroLine);
+
         StringBuffer sb = new StringBuffer("");
         int i = 0;
 

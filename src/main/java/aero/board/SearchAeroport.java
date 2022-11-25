@@ -6,6 +6,8 @@ import io.restassured.path.json.JsonPath;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -23,33 +25,19 @@ public class SearchAeroport {
     public List<Airport> airportList = new ArrayList<>();
     public String icao;
 
-//    public String inputSearchAeroport() {
+    private final SearchDAO searchDAO;
+    @Autowired
+    public SearchAeroport(SearchDAO searchDAO) {
+        this.searchDAO = searchDAO;
+    }
 
-//        try { //читаем строку поисковый запрос по названию аэропорта или города
-//            BufferedReader is = new BufferedReader(new InputStreamReader(System.in));
-//            return is.readLine();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return "";
-//    }
 
-//    public String encodeURL(String city) {
-//        try {
-//            //aeroportFromSearchLine = inputSearchAeroport();
-//
-//            encodeURLFromSearchLine = URLDecoder.decode(city, StandardCharsets.UTF_8.toString()); //при наличии кирилических символов в запросе кодируем их в URL код
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return encodeURLFromSearchLine;
-//    }
+
+
 
     public void searchAeroportToAPI(String city) { //формируем на основе полученой строки поиска Api запрос, на поиск нужного аэропорта
         java.net.http.HttpRequest request;
-        SearchDAO searchDAO = new SearchDAO();
+
         searchDAO.saveSearch(city);
         request = java.net.http.HttpRequest.newBuilder()
                 .uri(URI.create("https://aerodatabox.p.rapidapi.com/airports/search/term?q=" + city + "&limit=10"))
@@ -67,6 +55,7 @@ public class SearchAeroport {
         icao = response.body();
 
     }
+
     public String getIcao() {
         return icao;
     }
@@ -85,7 +74,7 @@ public class SearchAeroport {
         while (JsonPath.from(String.valueOf(jsonObject)).getString("items[" + i + "].name") != null) { //формируем список аэропортов из результатов поиска
             String name = (JsonPath.from(String.valueOf(jsonObject)).getString("items[" + i + "].name"));
             String icao = (JsonPath.from(String.valueOf(jsonObject)).getString("items[" + i + "].icao"));
-            airportList.add(new Airport(name,icao));
+            airportList.add(new Airport(name, icao));
             i++;
         }
     }
