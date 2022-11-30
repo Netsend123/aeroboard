@@ -7,10 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -20,25 +17,18 @@ import java.util.List;
 
 @Component
 public class SearchAeroport {
-    String aeroportFromSearchLine;
-    String encodeURLFromSearchLine;
+
     public List<Airport> airportList = new ArrayList<>();
     public String icao;
-
     private final SearchDAO searchDAO;
     @Autowired
     public SearchAeroport(SearchDAO searchDAO) {
         this.searchDAO = searchDAO;
     }
-
-
-
-
-
     public void searchAeroportToAPI(String city) { //формируем на основе полученой строки поиска Api запрос, на поиск нужного аэропорта
         java.net.http.HttpRequest request;
 
-        searchDAO.saveSearch(city);
+       // searchDAO.saveSearch(city);
         request = java.net.http.HttpRequest.newBuilder()
                 .uri(URI.create("https://aerodatabox.p.rapidapi.com/airports/search/term?q=" + city + "&limit=10"))
                 .header("X-RapidAPI-Key", "2ea3972599mshf337a6ce1622083p183087jsn9b1ac0ee54b4")
@@ -53,7 +43,6 @@ public class SearchAeroport {
         }
         System.out.println(request);
         icao = response.body();
-
     }
 
     public String getIcao() {

@@ -8,10 +8,12 @@ import org.json.simple.parser.ParseException;
 
 public class JsonParsingFlifgtList {
     public String inOut = "departures";
-
+    public String dataNotFound = "";
     public void setInOut(String inOut) {
         this.inOut = inOut;
     }
+
+
 
     public String parse(String jsonAeroLine) {
         JSONParser jsonParser = new JSONParser();
@@ -19,6 +21,7 @@ public class JsonParsingFlifgtList {
         if (jsonAeroLine.isEmpty()) {
             System.out.println("Data not found");
         }
+
         try {
             jsonObject = (JSONObject) jsonParser.parse(jsonAeroLine);
         } catch (ParseException e) {

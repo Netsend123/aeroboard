@@ -1,45 +1,33 @@
 package aero.board.dao;
 
-import aero.board.config.SpringConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.stereotype.Component;
+import aero.board.model.DbObject;
 
-import javax.sql.DataSource;
-import java.sql.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Component
 public class SearchDAO {
- private JdbcTemplate jdbcTemplate;
+
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public SearchDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
-
-
-    //    public DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//
-//        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost:5432/aerobase");
-//        dataSource.setUsername("postgres");
-//        dataSource.setPassword("postgres");
-//
-//        return dataSource;
-//    }
-//
-//
-//    public JdbcTemplate jdbcTemplate() {
-//        return new JdbcTemplate(dataSource());
-//    }
-
- //   private JdbcTemplate jdbcTemplate = jdbcTemplate();
-
-
-    public void saveSearch(String searsh) {
-        jdbcTemplate.update("INSERT INTO AIRPORTLIST (name, date ) VALUES(?, current_timestamp )", searsh);
+    @Transactional
+    public void saveSearch(DbObject dbObject) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(dbObject);
+    }
+    @Transactional
+    public List<DbObject> listFromSearch() {
+        Session session = sessionFactory.getCurrentSession();
+        return  (List<DbObject>) session.createSelectionQuery("FROM DbObject ORDER BY id DESC LIMIT 30").getResultList();
     }
 }
