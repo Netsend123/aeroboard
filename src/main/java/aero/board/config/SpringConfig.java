@@ -73,8 +73,6 @@ public class SpringConfig implements WebMvcConfigurer {
         dataSource.setPassword(environment.getRequiredProperty("hibernate.connection.password"));
         return dataSource;
     }
-
-
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
@@ -82,7 +80,6 @@ public class SpringConfig implements WebMvcConfigurer {
 
         return properties;
     }
-
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -101,7 +98,3 @@ public class SpringConfig implements WebMvcConfigurer {
         return transactionManager;
     }
 }
-// dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("driver")));
-//         dataSource.setUrl(environment.getProperty("url"));
-//         dataSource.setUsername(environment.getProperty("username"));
-//         dataSource.setPassword(environment.getProperty("password"));
